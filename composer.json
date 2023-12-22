@@ -1,0 +1,21 @@
+{
+    "name": "eluhr/yii2-json-attribute-behavior",
+    "description": "This behavior automatically decodes attributes from JSON to arrays before validation, handling errors and re-encoding if validation fails.",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","json","behavior"],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Elias Luhr",
+            "email": "e.luhr@herzogkommunikation.de"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "~2.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "eluhr\\jsonAttributeBehavior\\": "src"
+        }
+    }
+}
