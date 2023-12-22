@@ -64,7 +64,8 @@ class JsonAttributeBehavior extends AttributeBehavior
                 try {
                     $this->owner->$attribute = Json::decode($this->owner->$attribute);
                     $this->_convertedAttributes[] = $attribute;
-                } catch (InvalidArgumentException) {
+                } catch (InvalidArgumentException $e) {
+                    Yii::error($e->getMessage());
                     $this->owner->addError($attribute, Yii::t('json-attribute-behavior', '{attribute} must be a valid JSON string.', ['attribute' => $attribute]));
                 }
             }
