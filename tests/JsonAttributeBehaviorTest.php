@@ -16,6 +16,21 @@ final class JsonAttributeBehaviorTest extends TestCase
         $this->assertTrue((new Item(['data_json' => ['a' => 'b']]))->validate());
     }
 
+    public function testAllowNull(): void
+    {
+        $this->assertTrue((new Item(['data_json' => null, 'scenario' => Item::SCENARIO_ALLOW_EMPTY]))->validate());
+    }
+
+    public function testAllowEmptyString(): void
+    {
+        $this->assertTrue((new Item(['data_json' => '', 'scenario' => Item::SCENARIO_ALLOW_EMPTY]))->validate());
+    }
+
+    public function testAllowEmptyArray(): void
+    {
+        $this->assertTrue((new Item(['data_json' => [], 'scenario' => Item::SCENARIO_ALLOW_EMPTY]))->validate());
+    }
+
     public function testValueIsOriginalTypeAfterValidationForString(): void
     {
         $item = new Item(['data_json' => '{"a": "b"}']);
@@ -33,6 +48,19 @@ final class JsonAttributeBehaviorTest extends TestCase
 
 class Item extends Model
 {
+
+    public const SCENARIO_ALLOW_EMPTY = 'allowEmpty';
+
+    /**
+     * @inheritdoc
+     */
+    public function scenarios(): array
+    {
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_ALLOW_EMPTY] = ['data_json'];
+        return $scenarios;
+    }
+
     /**
      * @var string|array
      */
@@ -51,5 +79,16 @@ class Item extends Model
             ]
         ];
         return $behaviors;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules(): array
+    {
+        $rules = parent::rules();
+        $rules[] = [['data_json'], 'required', 'except' => 'allowEmpty'];
+        $rules[] = [['data_json'], 'safe', 'on' => 'allowEmpty'];
+        return $rules;
     }
 }
