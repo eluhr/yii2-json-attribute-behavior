@@ -1,2 +1,2 @@
 test:
-	./vendor/bin/phpunit tests --bootstrap=tests/bootstrap.php --do-not-cache-result
+	./vendor/bin/phpunit tests --configuration=tests/phpunit.xml
