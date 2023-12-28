@@ -55,15 +55,15 @@ class JsonAttributeBehavior extends AttributeBehavior
     public function events(): array
     {
         return [
-            Model::EVENT_BEFORE_VALIDATE => 'beforeValidate',
-            Model::EVENT_AFTER_VALIDATE => 'afterValidate'
+            Model::EVENT_BEFORE_VALIDATE => 'ensureValueIsArray',
+            Model::EVENT_AFTER_VALIDATE => 'convertBackToOriginalTypeIfNeeded'
         ];
     }
 
     /**
      * Ensure that the attribute value is an array if it is a string.
      */
-    public function beforeValidate(): void
+    public function ensureValueIsArray(): void
     {
         foreach ($this->attributes as $attribute) {
             if (is_string($this->owner->$attribute)) {
@@ -83,7 +83,7 @@ class JsonAttributeBehavior extends AttributeBehavior
     /**
      * Ensure that the attribute will be converted back to its original type if an error occurs.
      */
-    public function afterValidate(): void
+    public function convertBackToOriginalTypeIfNeeded(): void
     {
         if ($this->owner->hasErrors() || $this->alwaysConvertBackToOriginalType) {
             foreach ($this->attributes as $attribute) {
