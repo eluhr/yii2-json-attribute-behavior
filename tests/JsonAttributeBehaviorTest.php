@@ -6,14 +6,28 @@ use yii\base\Model;
 
 final class JsonAttributeBehaviorTest extends TestCase
 {
-    public function testValidateAttributeWithString()
+    public function testValidateAttributeWithString(): void
     {
         $this->assertTrue((new Item(['data_json' => '{"a": "b"}']))->validate());
     }
 
-    public function testValidateAttributeWithArray()
+    public function testValidateAttributeWithArray(): void
     {
         $this->assertTrue((new Item(['data_json' => ['a' => 'b']]))->validate());
+    }
+
+    public function testValueIsOriginalTypeAfterValidationForString(): void
+    {
+        $item = new Item(['data_json' => '{"a": "b"}']);
+        $item->validate();
+        $this->assertIsArray($item->data_json);
+    }
+
+    public function testValueIsOriginalTypeAfterValidationForArray(): void
+    {
+        $item = new Item(['data_json' => ['a' => 'b']]);
+        $item->validate();
+        $this->assertIsArray($item->data_json);
     }
 }
 
