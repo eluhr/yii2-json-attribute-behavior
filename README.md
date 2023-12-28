@@ -24,7 +24,6 @@ or add
 
 to the `require` section of your `composer.json` file.
 
-
 Usage
 -----
 
@@ -48,3 +47,12 @@ By using this behavior it does not matter if the attribute is a string or an arr
 The behavior will always ensure, that the attribute is an array before saving the data to the database and yii will handle the rest.
 
 This behavior supports [i18n](https://www.yiiframework.com/doc/guide/2.0/en/tutorial-i18n). By adding the `json-attribute-behavior` category in your config you can overwrite the default error messages.
+
+Testing
+-------
+
+After installing dependencies via composer you can run the tests with:
+
+```bash
+make test
+```
