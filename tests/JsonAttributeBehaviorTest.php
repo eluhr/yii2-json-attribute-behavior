@@ -44,6 +44,13 @@ final class JsonAttributeBehaviorTest extends TestCase
         $item->validate();
         $this->assertIsArray($item->data_json);
     }
+
+    public function testValueIsOriginalTypeAfterValidationForStringButConvertBackToString(): void
+    {
+        $item = new Item2(['data_json' => '{"a": "b"}']);
+        $item->validate();
+        $this->assertIsString($item->data_json);
+    }
 }
 
 class Item extends Model
@@ -90,5 +97,18 @@ class Item extends Model
         $rules[] = [['data_json'], 'required', 'except' => 'allowEmpty'];
         $rules[] = [['data_json'], 'safe', 'on' => 'allowEmpty'];
         return $rules;
+    }
+}
+
+class Item2 extends Item {
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors(): array
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['json-attribute']['alwaysConvertBackToOriginalType'] = true;
+        return $behaviors;
     }
 }

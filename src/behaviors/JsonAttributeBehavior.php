@@ -31,6 +31,7 @@ use yii\helpers\Json;
  *
  * @property Model $owner
  * @property string[] $_convertedAttributes
+ * @property bool $alwaysConvertBackToOriginalType
  */
 class JsonAttributeBehavior extends AttributeBehavior
 {
@@ -40,6 +41,13 @@ class JsonAttributeBehavior extends AttributeBehavior
      * @var array
      */
     private array $_convertedAttributes = [];
+
+    /**
+     * Whether to always convert the attribute back to its original type, even if no validation errors occur.
+     *
+     * @var bool
+     */
+    public bool $alwaysConvertBackToOriginalType = false;
 
     /**
      * @inheritdoc
@@ -77,10 +85,10 @@ class JsonAttributeBehavior extends AttributeBehavior
      */
     public function afterValidate(): void
     {
-        if ($this->owner->hasErrors()) {
+        if ($this->owner->hasErrors() || $this->alwaysConvertBackToOriginalType) {
             foreach ($this->attributes as $attribute) {
                 // If the attribute was originally a string, convert it back to a string.
-                if (in_array($this->owner->$attribute, $this->_convertedAttributes)) {
+                if (in_array($attribute, $this->_convertedAttributes)) {
                     // Convert the attribute back to its original type.
                     $this->owner->$attribute = Json::encode($this->owner->$attribute);
                     // Remove the attribute from the list of converted attributes.
