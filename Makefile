@@ -1,2 +1,2 @@
 test:
-	./vendor/bin/phpunit
+	./vendor/bin/phpunit tests --bootstrap=tests/bootstrap.php
