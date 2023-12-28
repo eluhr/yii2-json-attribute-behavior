@@ -10,4 +10,4 @@ jobs:
       - uses: php-actions/composer@v6
 #      - uses: php-actions/phpunit@v3
       - name: Run PHPUnit
-        run: make tests
+        run: make test
