@@ -2,6 +2,8 @@ Yii2 JSON Attribute Behavior
 ============================
 This behavior automatically decodes attributes from JSON to arrays before validation, handling errors and re-encoding if validation fails.
 
+![CI Workflow](https://github.com/eluhr/yii2-json-attribute-behavior/actions/workflows/ci.yml/badge.svg)
+
 Installation
 ------------
 
